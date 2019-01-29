@@ -19,8 +19,20 @@ describe Postcodesio do
       expect(@single_postcode_service.retrieve_postcode).to be_kind_of(String)
     end
 
+    it 'should retrieve a postcode no longer than 7 symbols long' do
+      expect(@single_postcode_service.retrieve_postcode.split(' ').length).to be <= 7
+    end
+
+    it 'should retrieve a postcode at least 5 symbols long' do
+      expect(@single_postcode_service.retrieve_postcode.length).to be >= 5
+    end
+
     it 'should retrieve the quality as an integer' do
       expect(@single_postcode_service.retrieve_quality).to be_kind_of(Integer)
+    end
+
+    it 'should retrieve the quality as a number between 1 and 9' do
+      expect(@single_postcode_service.retrieve_quality).to be_between(1,9)
     end
 
     it 'should retrieve eastings as an integer' do
@@ -71,8 +83,16 @@ describe Postcodesio do
       expect(@single_postcode_service.retrieve_incode).to be_kind_of(String)
     end
 
+    it 'should retrieve the incode with exactly 3 characters' do
+      expect(@single_postcode_service.retrieve_incode.length).to eq(3)
+    end
+
     it 'should retrieve outcode as a string' do
       expect(@single_postcode_service.retrieve_outcode).to be_kind_of(String)
+    end
+
+    it 'should retrieve the outcode with between 2 and 4 characters' do
+      expect(@single_postcode_service.retrieve_outcode.length).to be_between(2,4)
     end
 
     it 'should retrieve parliamentary constituency as a string' do
